@@ -187,12 +187,6 @@ $(document).ready(function() {
     dismissible: false
   })
 
-  $('.datepicker').datepicker({
-    autoClose: true,
-    container: 'body',
-    format: 'mmmm dd, yyyy'
-  })
-
   window.dTable = $('#datatable').DataTable({
     oLanguage: {
       sStripClasses: '',
@@ -215,7 +209,6 @@ $(document).ready(function() {
     }
   })
 
-  loadChips()
   loadTable()
 
   $('form[name=frmAdd]').submit(function(e) {
@@ -326,23 +319,37 @@ $(document).ready(function() {
         .prop('disabled', false)
     })
   })
+
+  $('.btnUpload').click(function() {
+    $('input[name=uploadExcel]').trigger('click')
+  })
+
+  $('input[name=uploadExcel]').change(function() {
+    if (!confirm('Are you sure do you want to upload?')) return
+
+    let form_data = new FormData()
+
+    form_data.append('file', $(this).prop('files')[0])
+
+    $.ajax({
+      url: 'data/upload',
+      type: 'POST',
+      data: form_data,
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response.success == true) {
+          alert('Uploaded Successfully!')
+          loadTable()
+        } else {
+          console.log(response)
+          alert(response.error)
+        }
+      }
+    })
+  })
 })
-
-function loadChips(element = 'body') {
-  $(element)
-    .find('.chips[data-name=authors]')
-    .chips({
-      placeholder: 'Enter an author',
-      secondaryPlaceholder: '+ Author'
-    })
-
-  $(element)
-    .find('.chips[data-name=keywords]')
-    .chips({
-      placeholder: 'Enter a keyword',
-      secondaryPlaceholder: '+ Keyword'
-    })
-}
 
 function loadTable() {
   $.ajax({
@@ -354,16 +361,19 @@ function loadTable() {
         console.log(value)
         dTable.row.add([
           value.id,
-          value.title,
-          value.authors.replace(/,/g, '<br>'),
-          value.keywords.replace(/,/g, ', '),
-          moment(value.date).format('MMMM DD, YYYY'),
+          value.partner_institution,
+          value.activity_name,
+          value.date,
           `
-            <button onclick="window.open('${base_url +
-              '/public/uploads/' +
-              value.file_name}')" class="waves-effect waves-light btn btn-flat">
-              <i class="material-icons">pageview</i>
-            </button>
+            ${
+              value.filename
+                ? `<button onclick="window.open('${base_url +
+                    '/public/uploads/' +
+                    value.file_name}')" class="waves-effect waves-light btn btn-flat">
+                    <i class="material-icons">pageview</i>
+                  </button>`
+                : ''
+            }
             <button class="waves-effect waves-light btn btn-flat btnEdit" data-id="${value.id}">
               <i class="material-icons">edit</i>
             </button>
@@ -394,26 +404,10 @@ function buttonInit() {
       url: 'data/' + id,
       dataType: 'json',
       success: function(response) {
-        loadChips(modal)
-
-        let authorsChip = M.Chips.getInstance(modal.find('.chips[data-name=authors]'))
-        let keywordsChip = M.Chips.getInstance(modal.find('.chips[data-name=keywords]'))
-
-        let authors = response.authors.split(',')
-        let keywords = response.keywords.split(',')
-
-        $.each(authors, function(key, value) {
-          authorsChip.addChip({ tag: value })
-        })
-
-        $.each(keywords, function(key, value) {
-          keywordsChip.addChip({ tag: value })
-        })
-
-        M.Datepicker.getInstance(modal.find('input[name=date]')).setDate(response.date)
         modal.find('input[name=id]').val(id)
-        modal.find('input[name=title]').val(response.title)
-        modal.find('input[name=date]').val(moment(response.date).format('MMMM DD, YYYY'))
+        modal.find('input[name=partner_institution]').val(response.partner_institution)
+        modal.find('input[name=activity_name]').val(response.activity_name)
+        modal.find('input[name=date]').val(response.date)
 
         modal.find('.loader-container').fadeOut()
       }

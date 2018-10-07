@@ -4,20 +4,16 @@
       <h4>Add</h4>
       <div class="row">
         <div class="input-field col s12">
-          <p class="caption">Title</p>
-          <input name="title" type="text" class="validate" placeholder="Enter the title" required>
+          <p class="caption">Partner Institution</p>
+          <input name="partner_institution" type="text" class="validate" placeholder="Enter the partner institution" required>
         </div>
         <div class="input-field col s12">
-          <p class="caption">Authors</p>
-          <div class="chips chips-placeholder" data-name="authors"></div>
+          <p class="caption">Activity Name</p>
+          <input name="activity_name" type="text" class="validate" placeholder="Enter the activity name" required>
         </div>
         <div class="input-field col s12">
-          <p class="caption">Keywords</p>
-          <div class="chips chips-placeholder" data-name="keywords"></div>
-        </div>
-        <div class="input-field col s12">
-          <p class="caption">Date</p>
-          <input id="date" name="date" type="text" class="datepicker" placeholder="Click to select a date" style="cursor:pointer" readonly required>
+          <p class="caption">Date of Activity</p>
+          <input id="date" name="date" type="text" class="validate" placeholder="Enter the date of activity" required>
         </div>
         <div class="file-field input-field col s12">
           <p class="caption">Upload PDF</p>
@@ -57,20 +53,16 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <p class="caption">Title</p>
-          <input name="title" type="text" class="validate" placeholder="Enter the title" required>
+          <p class="caption">Partner Institution</p>
+          <input name="partner_institution" type="text" class="validate" placeholder="Enter the partner institution" required>
         </div>
         <div class="input-field col s12">
-          <p class="caption">Authors</p>
-          <div class="chips chips-placeholder" data-name="authors"></div>
+          <p class="caption">Activity Name</p>
+          <input name="activity_name" type="text" class="validate" placeholder="Enter the activity name" required>
         </div>
         <div class="input-field col s12">
-          <p class="caption">Keywords</p>
-          <div class="chips chips-placeholder" data-name="keywords"></div>
-        </div>
-        <div class="input-field col s12">
-          <p class="caption">Date</p>
-          <input name="date" type="text" class="datepicker" placeholder="Click to select a date" style="cursor:pointer" readonly required>
+          <p class="caption">Date of Activity</p>
+          <input id="date" name="date" type="text" class="validate" placeholder="Enter the date of activity" required>
         </div>
         <div class="file-field input-field col s12">
           <p class="caption">Upload PDF</p>

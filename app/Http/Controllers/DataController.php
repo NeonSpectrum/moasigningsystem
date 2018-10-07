@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DataImport;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataController extends Controller {
 
@@ -34,20 +36,17 @@ class DataController extends Controller {
    */
   protected function add(Request $request) {
     parse_str($request->data, $data);
-    $authors  = $request->authors;
-    $keywords = $request->keywords;
-    $file     = $request->file;
+    $file = $request->file;
 
     $filename = str_replace('.' . $file->getClientOriginalExtension(), '', $file->getClientOriginalName()) . '-' . time() . '.' . $file->getClientOriginalExtension();
     $file->move(public_path('uploads'), $filename);
 
     try {
       $affectedRows = \DB::table('data')->insert([
-        'title'     => $data['title'],
-        'authors'   => $authors,
-        'keywords'  => $keywords,
-        'date'      => date('Y-m-d', strtotime($data['date'])),
-        'file_name' => $filename
+        'partner_institution' => $data['partner_institution'],
+        'activity_name'       => $data['activity_name'],
+        'date'                => date('Y-m-d', strtotime($data['date'])),
+        'file_name'           => $filename
       ]);
     } catch (QueryException $e) {
       return json_encode(['success' => false, 'error' => $e->getMessage()]);
@@ -64,15 +63,12 @@ class DataController extends Controller {
    */
   protected function edit(Request $request) {
     parse_str($request->data, $data);
-    $authors  = $request->authors;
-    $keywords = $request->keywords;
-    $file     = $request->file;
+    $authors = $request->authors;
 
     $arr = [
-      'title'    => $data['title'],
-      'authors'  => $authors,
-      'keywords' => $keywords,
-      'date'     => date('Y-m-d', strtotime($data['date']))
+      'partner_institution' => $data['partner_institution'],
+      'activity_name'       => $data['activity_name'],
+      'date'                => date('Y-m-d', strtotime($data['date']))
     ];
 
     if ($request->file) {
@@ -109,6 +105,18 @@ class DataController extends Controller {
       return json_encode(['success' => true]);
     } else {
       return json_encode(['success' => false, 'error' => 'Nothing changed!']);
+    }
+  }
+
+  /**
+   * @param Request $request
+   */
+  protected function upload(Request $request) {
+    try {
+      Excel::import(new DataImport, $request->file);
+      return json_encode(['success' => true]);
+    } catch (\Exception $e) {
+      return json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
   }
 }

@@ -6,18 +6,19 @@
       <div class="table-header">
         <span class="table-title">MOA Signing System</span>
         <div class="actions">
+          <a href="#" class="btnUpload modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">file_upload</i></a>
           <a href="#addModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">add</i></a>
           <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
+        <input type="file" name="uploadExcel" style="display:none">
       </div>
       <table id="datatable">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Title</th>
-            <th>Authors</th>
-            <th>Keywords</th>
-            <th>Date</th>
+            <th>Partner Institution</th>
+            <th>Activity Name</th>
+            <th>Date of Activity</th>
             <th>Action</th>
           </tr>
         </thead>
