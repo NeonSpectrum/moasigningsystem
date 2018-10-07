@@ -210,6 +210,7 @@ $(document).ready(function() {
   })
 
   loadTable()
+  dTable.column(3).visible(false)
 
   $('form[name=frmAdd]').submit(function(e) {
     e.preventDefault()
