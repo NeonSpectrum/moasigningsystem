@@ -356,7 +356,7 @@ function loadTable() {
           value.date,
           `
             ${
-              value.filename
+              value.file_name
                 ? `<button onclick="window.open('${base_url +
                     '/public/uploads/' +
                     value.file_name}')" class="waves-effect waves-light btn btn-flat">

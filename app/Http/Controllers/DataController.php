@@ -63,15 +63,15 @@ class DataController extends Controller {
    */
   protected function edit(Request $request) {
     parse_str($request->data, $data);
-    $authors = $request->authors;
+    $file = $request->file;
 
     $arr = [
       'partner_institution' => $data['partner_institution'],
       'activity_name'       => $data['activity_name'],
-      'date'                => date('Y-m-d', strtotime($data['date']))
+      'date'                => $data['date']
     ];
 
-    if ($request->file) {
+    if ($file) {
       $filename = str_replace('.' . $file->getClientOriginalExtension(), '', $file->getClientOriginalName()) . '-' . time() . '.' . $file->getClientOriginalExtension();
 
       $file->move(public_path('uploads'), $filename);
