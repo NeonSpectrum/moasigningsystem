@@ -221,13 +221,8 @@ $(document).ready(function() {
       .find('button')
       .prop('disabled', true)
 
-    let authors = _.pluck(M.Chips.getInstance($(this).find('.chips[data-name=authors]')).chipsData, 'tag')
-    let keywords = _.pluck(M.Chips.getInstance($(this).find('.chips[data-name=keywords]')).chipsData, 'tag')
-
     let form_data = new FormData()
     form_data.append('data', $(this).serialize())
-    form_data.append('authors', authors)
-    form_data.append('keywords', keywords)
     form_data.append('file', $('input[name=file]').prop('files')[0])
 
     $.ajax({
@@ -271,13 +266,8 @@ $(document).ready(function() {
       .find('button')
       .prop('disabled', true)
 
-    let authors = _.pluck(M.Chips.getInstance($(this).find('.chips[data-name=authors]')).chipsData, 'tag')
-    let keywords = _.pluck(M.Chips.getInstance($(this).find('.chips[data-name=keywords]')).chipsData, 'tag')
-
     let form_data = new FormData()
     form_data.append('data', $(this).serialize())
-    form_data.append('authors', authors)
-    form_data.append('keywords', keywords)
 
     if (
       $(this)
