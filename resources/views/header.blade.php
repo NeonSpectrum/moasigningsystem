@@ -6,6 +6,6 @@
   <link rel="stylesheet" href="{{ asset('public/css/materialize.min.css') }}">
   <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title>MOA Signing System</title>
+  <title>College Partnership Archiving System</title>
 </head>
 <body>
