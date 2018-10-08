@@ -365,65 +365,64 @@ function loadTable() {
                   </button>`
                 : ''
             }
-            <button class="waves-effect waves-light btn btn-flat btnEdit" data-id="${value.id}">
+            <button onclick="editData(${value.id})"  class="waves-effect waves-light btn btn-flat btnEdit" data-id="${
+            value.id
+          }">
               <i class="material-icons">edit</i>
             </button>
-            <button class="waves-effect waves-light btn btn-flat btnDelete" data-id="${value.id}">
+            <button onclick="deleteData(${
+              value.id
+            })"  class="waves-effect waves-light btn btn-flat btnDelete" data-id="${value.id}">
               <i class="material-icons">delete</i>
             </button>
           `
         ])
       })
       dTable.draw()
-      buttonInit()
     }
   })
 }
 
-function buttonInit() {
-  $('.btnEdit').unbind('click')
-  $('.btnDelete').unbind('click')
+function editData(id) {
+  let id = $(this).data('id')
+  let modal = $('#editModal')
 
-  $('.btnEdit').click(function() {
-    let id = $(this).data('id')
-    let modal = $('#editModal')
+  modal.find('.loader-container').show()
+  modal.modal('open')
 
-    modal.find('.loader-container').show()
-    modal.modal('open')
+  $.ajax({
+    url: 'data/' + id,
+    dataType: 'json',
+    success: function(response) {
+      modal.find('input[name=id]').val(id)
+      modal.find('input[name=partner_institution]').val(response.partner_institution)
+      modal.find('input[name=activity_name]').val(response.activity_name)
+      modal.find('input[name=date]').val(response.date)
 
-    $.ajax({
-      url: 'data/' + id,
-      dataType: 'json',
-      success: function(response) {
-        modal.find('input[name=id]').val(id)
-        modal.find('input[name=partner_institution]').val(response.partner_institution)
-        modal.find('input[name=activity_name]').val(response.activity_name)
-        modal.find('input[name=date]').val(response.date)
-
-        modal.find('.loader-container').fadeOut()
-      }
-    })
+      modal.find('.loader-container').fadeOut()
+    }
   })
-  $('.btnDelete').click(function() {
-    if (!confirm('Are you sure do you want to delete?')) return
+}
 
-    let id = $(this).data('id')
+function deleteData(id) {
+  if (!confirm('Are you sure do you want to delete?')) return
 
-    $(this).prop('disabled', false)
+  let id = $(this).data('id')
 
-    $.ajax({
-      url: 'data/delete',
-      type: 'POST',
-      data: { id },
-      dataType: 'json',
-      success: function(response) {
-        if (response.success) {
-          alert('Deleted Successfully!')
-          loadTable()
-        } else {
-          alert(response.error)
-        }
+  $(this).prop('disabled', false)
+
+  $.ajax({
+    url: 'data/delete',
+    type: 'POST',
+    data: { id },
+    dataType: 'json',
+    success: function(response) {
+      if (response.success) {
+        alert('Deleted Successfully!')
+        loadTable()
+      } else {
+        alert(response.error)
       }
-    })
+    }
   })
 }
