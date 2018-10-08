@@ -384,7 +384,6 @@ function loadTable() {
 }
 
 function editData(id) {
-  let id = $(this).data('id')
   let modal = $('#editModal')
 
   modal.find('.loader-container').show()
@@ -406,8 +405,6 @@ function editData(id) {
 
 function deleteData(id) {
   if (!confirm('Are you sure do you want to delete?')) return
-
-  let id = $(this).data('id')
 
   $(this).prop('disabled', false)
 
