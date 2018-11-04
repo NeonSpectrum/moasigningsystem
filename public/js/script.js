@@ -353,7 +353,9 @@ function loadTable() {
     success: function(response) {
       dTable.clear()
       $.each(response, function(key, value) {
-        console.log(value)
+        value = _.mapObject(value, function(val) {
+          return _.escape(val)
+        })
         dTable.row.add([
           value.id,
           value.partner_institution,

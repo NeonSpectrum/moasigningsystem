@@ -18,3 +18,6 @@ Route::post('/data/add', 'DataController@add');
 Route::post('/data/edit', 'DataController@edit');
 Route::post('/data/delete', 'DataController@delete');
 Route::post('/data/upload', 'DataController@upload');
+Route::get('/pdf', function () {
+  return view('pdf');
+});
