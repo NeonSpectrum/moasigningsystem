@@ -429,3 +429,37 @@ function deleteData(id) {
     }
   })
 }
+
+$('form[name=frmLogin]').submit(function(e) {
+  e.preventDefault()
+
+  $(this)
+    .find('input')
+    .prop('readonly', true)
+  $(this)
+    .find('button[type=submit]')
+    .prop('disabled', true)
+
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: main_url + '/login',
+    data: $(this).serialize(),
+    dataType: 'json'
+  })
+    .done(function(response) {
+      if (response.success) {
+        location.href = './'
+      } else {
+        alert(response.error)
+      }
+    })
+    .always(function() {
+      $(this)
+        .find('input')
+        .prop('readonly', false)
+      $(this)
+        .find('button[type=submit]')
+        .prop('disabled', false)
+    })
+})
