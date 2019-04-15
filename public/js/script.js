@@ -365,15 +365,15 @@ function loadTable() {
             ${
               value.file_name
                 ? `<button onclick="window.open('${main_url +
-                    '/public/uploads/' +
+                    '/uploads/' +
                     value.file_name}')" class="waves-effect waves-light btn btn-flat">
                     <i class="material-icons">pageview</i>
                   </button>`
                 : ''
             }
-            <button onclick="editData(${value.id})"  class="waves-effect waves-light btn btn-flat btnEdit" data-id="${
-            value.id
-          }">
+            <button onclick="editData(${
+              value.id
+            })"  class="waves-effect waves-light btn btn-flat btnEdit" data-id="${value.id}">
               <i class="material-icons">edit</i>
             </button>
             <button onclick="deleteData(${
